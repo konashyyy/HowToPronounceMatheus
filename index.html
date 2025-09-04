@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Learn To Say "Matheus"</title>
+  <style>
+    body{
+      margin:0; height:100%; display:flex; align-items:center; justify-content:center; flex-direction:column;
+      font-family:system-ui, sans-serif; background:linear-gradient(135deg,#0f172a,#1e293b);
+      color:#f1f5f9;
+    }
+    h1{
+      font-size:clamp(32px,6vw,60px);
+      margin-bottom:40px;
+      text-align:center;
+    }
+    .audio-btn{
+      width:120px; height:120px; border-radius:999px;
+      display:grid; place-items:center;
+      cursor:pointer; border:none;
+      background: radial-gradient(circle at 50% 40%, rgba(96,165,250,.4), rgba(96,165,250,.15));
+      box-shadow: 0 10px 30px rgba(96,165,250,.25), inset 0 0 14px rgba(96,165,250,.3);
+      transition: transform .2s ease;
+    }
+    .audio-btn:hover{ transform: scale(1.05); }
+    .audio-btn:active{ transform: scale(0.98); }
+    svg{fill:#f1f5f9}
+    footer{margin-top:30px; font-size:14px; color:#94a3b8}
+  </style>
+</head>
+<body>
+  <h1>How To Pronounce: Matheus</h1>
+
+  <button id="audioBtn" class="audio-btn" title="Ouvir pronúncia">
+    <svg id="iconPlay" width="40" height="40" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z"/></svg>
+    <svg id="iconPause" width="40" height="40" viewBox="0 0 24 24" style="display:none"><path d="M6 4h4v16H6zM14 4h4v16h-4z"/></svg>
+  </button>
+
+  <audio id="nameAudio">
+    <!-- Substitua o arquivo abaixo pelo seu próprio áudio -->
+    <source src="2025-09-04 19-19-24 (mp3cut.net).m4a" type="audio/mpeg">
+    Seu navegador não suporta áudio.
+  </audio>
+
+  <footer>Clique no botão para ouvir a pronúncia de "Matheus"</footer>
+
+  <script>
+    const audio = document.getElementById('nameAudio');
+    const btn = document.getElementById('audioBtn');
+    const playIcon = document.getElementById('iconPlay');
+    const pauseIcon = document.getElementById('iconPause');
+
+    function updateUI(playing){
+      playIcon.style.display = playing ? 'none' : 'block';
+      pauseIcon.style.display = playing ? 'block' : 'none';
+    }
+
+    btn.addEventListener('click', async () => {
+      if(audio.paused){
+        try{ await audio.play(); updateUI(true); }
+        catch(err){ console.warn('Erro ao tocar áudio', err); }
+      } else {
+        audio.pause(); updateUI(false);
+      }
+    });
+
+    audio.addEventListener('ended', ()=> updateUI(false));
+    audio.addEventListener('pause', ()=> updateUI(false));
+    audio.addEventListener('play', ()=> updateUI(true));
+  </script>
+</body>
+</html>
